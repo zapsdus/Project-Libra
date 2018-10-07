@@ -30,7 +30,7 @@ public class MatchingModel {
 		}
 		
 		//Some ways to generate preferences here. 
-		int[][] MalePref=new int[MaleNumber][FemaleNumber];
+		int[][] MalePref=new int[MaleNumber][FemaleNumber];//Preference value, not rank
 		int[][] FemalePref=new int[FemaleNumber][MaleNumber];
 		double[][] Distance=new double[MaleNumber][FemaleNumber];
 		//Currently, I use random generation.
@@ -60,12 +60,66 @@ public class MatchingModel {
 		        //objective
 		        	IloLinearNumExpr objective = cplex.linearNumExpr();
 		        	//cplex.setParam(IloCplex.Param.MIP.Tolerances.MIPGap, 1.0e-5);
-		        	
+		        	for (int i=0; i<MaleNumber; i++) {	        		
+		        		for (int j=0; j<FemaleNumber; j++) {
+		        			objective.addTerm(Distance[i][j],x[i][j]);
+		        		}
+		        	}
+		        	cplex.addMinimize(objective);
 		        //constraints
-
 					cplex.setParam(IloCplex.Param.Simplex.Display, 0);
+		        	for (int i=0; i<MaleNumber; i++) {
+		        		IloLinearNumExpr expr1 = cplex.linearNumExpr();
+		        		for (int j=0; j<FemaleNumber; j++) {
+		        			expr1.addTerm(1.0,x[i][j]);
+		        		}
+		        		cplex.addEq(expr1, 1);
+		        	}
+		        	for (int j=0; j<FemaleNumber; j++) {
+		        		IloLinearNumExpr expr2 = cplex.linearNumExpr();
+			        	for (int i=0; i<MaleNumber; i++) {
+		        			expr2.addTerm(1.0,x[i][j]);
+		        		}
+		        		cplex.addEq(expr2, 1);
+		        	}
 		        	
+		        	for (int i=0; i<MaleNumber; i++) {
+			        	for (int j=0; j<FemaleNumber; j++) {
+			        		IloLinearNumExpr expr3 = cplex.linearNumExpr();
+				        	for (int k=0; k<MaleNumber; k++) {
+				        		if (FemalePref[j][k]<FemalePref[j][i]) {
+				        			expr3.addTerm(1.0,x[k][j]);
+				        		}
+			        		}
+				        	IloLinearNumExpr expr4 = cplex.linearNumExpr();
+				        	for (int k=0; k<FemaleNumber; k++) {
+				        		if (MalePref[i][k]<MalePref[i][j]) {
+				        			expr4.addTerm(1.0,x[i][k]);
+				        		}
+			        		}
+				        	cplex.addLe(cplex.sum(x[i][j], expr3,expr4),1);   		
+			        	}			        	
+		        	}
 		        //solve model
+		        	if (cplex.solve()) {
+		        		//double obj = cplex.getObjValue();
+			        	for (int i=0; i<MaleNumber; i++) {
+				        		double[] Tempx=cplex.getValues(x[i]);	
+				        		for (int j=0; j<FemaleNumber; j++) {
+				        			if (Tempx[j]==1.0) {
+				        				int i_result=i+1;
+				        				int j_result=j+1;
+				        				System.out.println("A match of male and female: ("+i_result+","+j_result+")");
+				        				//System.out.println(Tempx[j]);
+				        			}
+				        			
+				        		}
+				        }
+		        		//Calculate the percentage of connected cars!
+		        	}
+		        	else {
+		        		System.out.println("problem not solved");
+		        	}
 		        	cplex.end();     
 	        }
 	        catch (IloException exc) {
