@@ -1,0 +1,137 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=letter, fontsize=12pt]{scrartcl} % letter paper and 11pt font size
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+\usepackage{enumitem}
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{
+\normalfont \normalsize
+\textsc{Project Libra} \\ [14pt] 
+\huge Attributes setting \#1   \\ 
+}
+
+\author{Libra Force} % Your name
+
+\date{Oct 10th, 2018} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+\section{In general}
+These ideas are considered as reference only.
+
+\section{Strength}
+Attribute calculation:
+\begin{equation}
+100[\frac{ln(max(h,1))}{ln(h_0)}-0.2max(h-h_0,0)]w_0^{w-w_0}\frac{w_0!}{w!}[0.6+0.4/3(x_1+x_2+x_3)]
+\end{equation}
+
+$$$$
+
+Here, $h$ and $w$ are user's height and weight while $h_0$ and $w_0$ are user's default/standard/perfect weight. 
+
+\begin{itemize}
+	\item $x_1=0.5$ if user prefer to go out than stay at home; otherwise $x_1=0$;
+	\item $x_2=0.5$ if user enjoy any kind of sports activity; otherwise $x_2=0$;
+	\item $x_3=2$ if user work out frequently; otherwise $x_3=0$;
+\end{itemize}
+
+\textbf{For Male:}$h_0=1.84(m)$, $w_0=24.5h_0^2(kg)$
+
+\textbf{For Female:}$h_0=1.64(m)$, $w_0=18.5h_0^2(kg)$
+
+\section{Intelligence}
+To be decided:
+
+School Rank; GPA; Age; Enjoy reading/talking with others/arguing?; Ever realized that you are more/less smart than others? If so, at what age?
+
+\section{Luck}
+Attribute calculation:
+\begin{equation}
+10\sqrt{93+7y_1-|y_2-rand([0,10])|^2}
+\end{equation}
+
+\begin{itemize}
+	\item $y_1=1$ if user thinks he/she is luck;
+	\item $y_2$: pick your lucky number from 0 to 10;
+\end{itemize}
+
+\section{Charm}
+To de decided...I don't know hobbies, or exceptional items.
+
+\section{Personality}
+Check? https://www.16personalities.com/
+
+\section{Others}
+Use color to denote age, from light to dark (young to old); Ask for favorite color (RGB value?)
+
+\section{Hidden Attributes}
+Appearance;
+Age, based on date of birth;
+Culture preference: China, Japan, Korea, Europe, United States, Others...
+Entertainment preference: Zong Yi jie mu, Movies, Episodes, Talk show, music, games...
+Political preference;
+Current region;
+
+\section{Preference calculation}
+Similarity or dissimilarity? Ask users for answers.
+Astrology/constellation;
+Zipcode to calculate distance;
+
+\end{document}
+
+%\begin{figure*}[!ht]
+%  \centering    
+%  \includegraphics[width=90mm]{ramp}
+%\end{figure*}
